@@ -3,7 +3,7 @@
 We provide PyTorch implementations for both predicting and training procedures.
 
 ## Summary
----
+
 
 DeepHiC is based on [Generative Adversarial Network](https://arxiv.org/abs/1406.2661), take low-resolution data as conditional inputs for *Generator* Net in GAN. Here we trained DeepHiC for 200 epochs on chromosome 1-14 in GM12878 cell line from [Rao's HiC](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE63525)
 
@@ -11,7 +11,7 @@ DeepHiC is based on [Generative Adversarial Network](https://arxiv.org/abs/1406.
 > The framework of DeepHiC. With 10kb high-resolution data as ground truth, DeepHiC predicts enhanced output from 1/16 downsampled reads (simulate 40 kb low-resolution data). The structure similarity between enhanced outputs and high-resolution data is 0.89 on average. 
 
 ## Galance
----
+
 
 A galace of the efficience of DeepHiC.
 
@@ -19,7 +19,7 @@ A galace of the efficience of DeepHiC.
 > First example from training set, and the last two are extracted from test set.
 
 ## Usage
----
+
 
 Take GM12878 cell line as example.
 
@@ -87,7 +87,7 @@ python visual_analysis.py -lr 40kb --corr --shift 150 -c GM12878
 ~~~
 
 ## Requirements
----
+
 
 DeepHiC is written in Python3 with PyTorch framework. It demands python version 3.6+
 
