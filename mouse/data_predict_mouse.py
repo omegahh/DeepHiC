@@ -77,7 +77,7 @@ files = [f for f in os.listdir(in_dir) if f.find(cell_type) >= 0]
 deephic_file = [f for f in files if f.find('deephic') >= 0][0]
 hicplus_file = [f for f in files if f.find('hicplus') >= 0][0]
 
-chunk, stride, bound, scale = filename_parser(srgan_file)
+chunk, stride, bound, scale = filename_parser(deephic_file)
 print(f'Arguments parsed: chunk{chunk}, stride{stride}, bound{bound}, scale{scale}')
 
 
