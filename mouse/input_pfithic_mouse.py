@@ -6,7 +6,7 @@ import multiprocessing
 import numpy as np
 from utilities import fdir, mkdir
 
-project_dir = '/home/omega/Codes/Notebooks/model_deephic'
+project_dir = '..'
 sys.path.append(project_dir)
 from input_pfithic import *
 from all_parser import *

@@ -64,7 +64,7 @@ def hicplus_predictor(hicplus_loader, device):
     plus_hics = together(result_data_plus, result_inds_plus, tag='HiC[plus]')
     return plus_hics
     
-def deephic_predictor(srgan_loader, ckpt_file, scale, res_num, device):
+def deephic_predictor(deephic_loader, ckpt_file, scale, res_num, device):
     deepmodel = deephic.Generator(scale_factor=scale, in_channel=1, resblock_num=res_num).to(device)
     if not os.path.isfile(ckpt_file):
         ckpt_file = f'save/{ckpt_file}'
@@ -74,7 +74,7 @@ def deephic_predictor(srgan_loader, ckpt_file, scale, res_num, device):
     result_inds = []
     deepmodel.eval()
     with torch.no_grad():
-        for batch in tqdm(srgan_loader, desc='DeepHiC Predicting: '):
+        for batch in tqdm(deephic_loader, desc='DeepHiC Predicting: '):
             lr, inds = batch
             lr = lr.to(device)
             out = deepmodel(lr)

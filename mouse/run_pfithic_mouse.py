@@ -2,7 +2,7 @@ import os, sys
 
 from pfithic.runner import main as fithic
 from utilities import fdir, mkdir
-project_dir = '/home/omega/Codes/Notebooks/model_deephic'
+project_dir = '..'
 sys.path.append(project_dir)
 from all_parser import *
 

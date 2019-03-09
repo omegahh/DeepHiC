@@ -139,7 +139,7 @@ for epoch in range(1, num_epochs+1):
             valid_result['ssims'] += batch_ssim * batch_size
             valid_result['psnr'] = 10 * log10(1/(valid_result['mse']/valid_result['nsamples']))
             valid_result['ssim'] = valid_result['ssims'] / valid_result['nsamples']
-            valid_bar.set_description(desc=f"[predicting in Test set] PSNR: {valid_result['psnr']:.4f} dB SSIM: {valid_result['ssim']:.4f}")
+            valid_bar.set_description(desc=f"[Predicting in Test set] PSNR: {valid_result['psnr']:.4f} dB SSIM: {valid_result['ssim']:.4f}")
 
     valid_gloss = valid_result['g_loss'] / valid_result['nsamples']
     valid_dloss = valid_result['d_loss'] / valid_result['nsamples']

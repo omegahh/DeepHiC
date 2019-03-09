@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-project_dir = '/home/omega/Codes/Notebooks/model_deephic'
+project_dir = '..'
 sys.path.append(project_dir)
 from utils.io import compactM
 from utils.viz import hic_heatmap

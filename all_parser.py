@@ -74,16 +74,16 @@ def data_divider_parser():
                           default='40kb', required=True)
     req_args.add_argument('-s', dest='dataset', help='REQUIRED: Dataset for train/valid/predict(all)', 
                           default='train', choices=['all', 'train', 'valid'], )
-    srgan_args = parser.add_argument_group('DeepHiC Arguments')
-    srgan_args.add_argument('-chunk', dest='chunk', help='REQUIRED: chunk size for dividing[example:40]', 
+    deephic_args = parser.add_argument_group('DeepHiC Arguments')
+    deephic_args.add_argument('-chunk', dest='chunk', help='REQUIRED: chunk size for dividing[example:40]', 
                             default=40, type=int, required=True)
-    srgan_args.add_argument('-stride', dest='stride', help='REQUIRED: stride for dividing[example:40]', 
+    deephic_args.add_argument('-stride', dest='stride', help='REQUIRED: stride for dividing[example:40]', 
                             default=40, type=int, required=True)
-    srgan_args.add_argument('-bound', dest='bound', help='REQUIRED: distance boundary interested[example:201]', 
+    deephic_args.add_argument('-bound', dest='bound', help='REQUIRED: distance boundary interested[example:201]', 
                             default=201, type=int, required=True)
-    srgan_args.add_argument('-scale', dest='scale', help='REQUIRED: Downpooling scale[example:1]', 
+    deephic_args.add_argument('-scale', dest='scale', help='REQUIRED: Downpooling scale[example:1]', 
                             type=int, required=True)
-    srgan_args.add_argument('-type', dest='pool_type', help='OPTIONAL: Downpooling type[default:max]',
+    deephic_args.add_argument('-type', dest='pool_type', help='OPTIONAL: Downpooling type[default:max]',
                             default='max', choices=['max','avg'])
     parser.add_argument(*help_opt[0], **help_opt[1])
 
@@ -96,10 +96,10 @@ def data_predict_parser():
                           required=True)
     req_args.add_argument('-lr', dest='low_res', help='REQUIRED: Low resolution specified[example:40kb]', 
                           default='40kb', required=True)
-    gan_args = parser.add_argument_group('GAN model Arguments')
-    gan_args.add_argument('-ckpt', dest='checkpoint', help='REQUIRED: Checkpoint file of DeepHiC model', 
+    deephic_args = parser.add_argument_group('DeepHiC model Arguments')
+    deephic_args.add_argument('-ckpt', dest='checkpoint', help='REQUIRED: Checkpoint file of DeepHiC model', 
                           required=True)
-    gan_args.add_argument('-res', dest='resblock', help='IMPORTANT: The number of Resblock layers[default:5]', 
+    deephic_args.add_argument('-res', dest='resblock', help='IMPORTANT: The number of Resblock layers[default:5]', 
                           default=5, type=int)
 
     misc_args = parser.add_argument_group('Miscellaneous Arguments')

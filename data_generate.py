@@ -94,9 +94,9 @@ if __name__ == '__main__':
     sizes = {r.get()[0]: r.get()[5] for r in results}
 
     filename = f'deephic_{high_res}{low_res}_c{chunk}_s{stride}_b{bound}_{pool_str}_{postfix}.npz'
-    srgan_file = os.path.join(out_dir, filename)
-    np.savez_compressed(srgan_file, data=data, target=target, inds=inds, compacts=compacts, sizes=sizes)
-    print('Saving file:', srgan_file)
+    deephic_file = os.path.join(out_dir, filename)
+    np.savez_compressed(deephic_file, data=data, target=target, inds=inds, compacts=compacts, sizes=sizes)
+    print('Saving file:', deephic_file)
 
     if hicplus_trigger:
         start = time.time()

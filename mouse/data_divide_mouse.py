@@ -5,7 +5,7 @@ import multiprocessing
 import torch
 import numpy as np
 
-project_dir = '/home/omega/Codes/Notebooks/model_deephic'
+project_dir = '..'
 sys.path.append(project_dir)
 from utilities import fdir, mkdir
 from utils.io import compactM, divide, pooling
@@ -93,9 +93,9 @@ compacts = {r.get()[0]: r.get()[3] for r in results}
 sizes = {r.get()[0]: r.get()[4] for r in results}
 
 filename = f'{postfix}_c{chunk}_s{stride}_b{bound}_{pool_str}_deephics.npz'
-srgan_file = os.path.join(out_dir, filename)
-np.savez_compressed(srgan_file, data=data, inds=inds, compacts=compacts, sizes=sizes)
-print('Saving file:', srgan_file)
+deephic_file = os.path.join(out_dir, filename)
+np.savez_compressed(deephic_file, data=data, inds=inds, compacts=compacts, sizes=sizes)
+print('Saving file:', deephic_file)
 
 start = time.time()
 pool = multiprocessing.Pool(processes=pool_num)

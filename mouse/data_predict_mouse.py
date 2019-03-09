@@ -7,7 +7,7 @@ import torch
 from torch.utils.data import TensorDataset, DataLoader
 from tqdm import tqdm
 
-project_dir = '/home/omega/Codes/Notebooks/model_deephic'
+project_dir = '..'
 sys.path.append(project_dir)
 from utilities import mkdir
 from models.hicplus import ConvNet
@@ -34,8 +34,8 @@ def rebuild(data, indices):
     return hics
 
 get_digit = lambda x: int(''.join(list(filter(str.isdigit, x))))
-def filename_parser(srgan_file):
-    info_str = srgan_file.split('.')[0].split('_')[-5:-1]
+def filename_parser(deephic_file):
+    info_str = deephic_file.split('.')[0].split('_')[-5:-1]
     chunk = get_digit(info_str[0])
     stride = get_digit(info_str[1])
     bound = get_digit(info_str[2])
