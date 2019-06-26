@@ -27,7 +27,7 @@ if __name__ == '__main__':
 
     pool_num = 23 if multiprocessing.cpu_count() > 23 else multiprocessing.cpu_count()
 
-    raw_dir = os.path.join('data/raw', cell_line)
+    raw_dir = os.path.join(root_dir, 'raw', cell_line)
 
     norm_files = []
     data_files = []
@@ -40,7 +40,7 @@ if __name__ == '__main__':
                     elif (f.endswith(postfix[1])):
                         data_files.append(os.path.join(root, f))
 
-    out_dir = os.path.join('data/processing', cell_line)
+    out_dir = os.path.join(root_dir, 'mat', cell_line)
     mkdir(out_dir)
     print(f'Start reading data, there are {len(norm_files)} files ({resolution}).')
     print(f'Output directory: {out_dir}')

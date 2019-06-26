@@ -21,7 +21,7 @@ def readcoo2mat(cooFile, normFile, resolution):
     norm[np.isnan(norm)] = 1
     mat = mat/norm
     mat = mat.T/norm
-    HiC = mat + np.tril(mat, 1).T
+    HiC = mat + np.tril(mat, -1).T
     return HiC.astype(int), compact_idx
 
 def compactM(matrix, compact_idx, verbose=False):

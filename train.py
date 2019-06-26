@@ -14,10 +14,17 @@ from models.loss import GeneratorLoss
 from models.ssim import ssim
 from math import log10
 
+from all_parser import root_dir
+
 cs = np.column_stack
 
-data_dir = os.path.join('data/processed')
-out_dir = os.path.join('data/checkpoints')
+# data_dir: directory storing processed data
+data_dir = os.path.join(root_dir, 'data')
+
+# out_dir: directory storing checkpoint files
+out_dir = os.path.join(root_dir, 'checkpoints')
+os.makedirs(out_dir, exist_ok=True)
+
 datestr = time.strftime('%m_%d_%H_%M')
 visdom_str=time.strftime('%m%d')
 
@@ -31,8 +38,10 @@ upscale = 1
 num_epochs = 200
 batch_size = 64
 
+# whether using GPU for training
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
+# prepare training dataset
 train_file = os.path.join(data_dir, f'deephic_{resos}_c{chunk}_s{stride}_b{bound}_{pool}_train.npz')
 train = np.load(train_file)
 
@@ -42,6 +51,7 @@ train_inds = torch.tensor(train['inds'], dtype=torch.long)
 
 train_set = TensorDataset(train_data, train_target, train_inds)
 
+# prepare valid dataset
 valid_file = os.path.join(data_dir, f'deephic_{resos}_c{chunk}_s{stride}_b{bound}_{pool}_valid.npz')
 valid = np.load(valid_file)
 
@@ -51,19 +61,24 @@ valid_inds = torch.tensor(valid['inds'], dtype=torch.long)
 
 valid_set = TensorDataset(valid_data, valid_target, valid_inds)
 
+# DataLoader for batched training
 train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True, drop_last=True)
 valid_loader = DataLoader(valid_set, batch_size=batch_size, shuffle=False, drop_last=True)
 
+# load network
 netG = Generator(upscale, in_channel=1, resblock_num=5).to(device)
 netD = Discriminator(in_channel=1).to(device)
 
+# loss function
 criterionG = GeneratorLoss().to(device)
 criterionD = torch.nn.BCELoss().to(device)
 
+# optimizer
 optimizerG = optim.Adam(netG.parameters(), lr=0.0001)
 optimizerD = optim.Adam(netD.parameters(), lr=0.0001)
 
 vis = visdom.Visdom(env=f'{visdom_str}-deephic')
+
 best_ssim = 0
 for epoch in range(1, num_epochs+1):
     run_result = {'nsamples': 0, 'd_loss': 0, 'g_loss': 0, 'd_score': 0, 'g_score': 0}
@@ -170,3 +185,4 @@ final_ckpt_d = f'{datestr}_finald_{resos}_c{chunk}_s{stride}_b{bound}_{pool}_dee
 
 torch.save(netG.state_dict(), os.path.join(out_dir, final_ckpt_g))
 torch.save(netD.state_dict(), os.path.join(out_dir, final_ckpt_d))
+

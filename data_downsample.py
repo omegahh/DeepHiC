@@ -26,7 +26,7 @@ if __name__ == '__main__':
 
     pool_num = 23 if multiprocessing.cpu_count() > 23 else multiprocessing.cpu_count()
 
-    data_dir = os.path.join('data/processing', cell_line)
+    data_dir = os.path.join(root_dir, 'mat', cell_line)
     in_files = [os.path.join(data_dir, f) for f in os.listdir(data_dir) if f.find(high_res) >= 0]
 
     print(f'Generating {low_res} files from {high_res} files by {ratio}x downsampling.')
@@ -38,3 +38,4 @@ if __name__ == '__main__':
     pool.close()
     pool.join()
     print(f'All downsampling processes done. Running cost is {(time.time()-start)/60:.1f} min.')
+
