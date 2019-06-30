@@ -53,7 +53,7 @@ Here we unzip Hi-C data into `/data/RaoHiC/raw/GM12878`. `root_dir` could be cus
 
 ### 2. Processed data
 
-We also uploaded the data for training our model, and the processed data in GM12878 replicate which could be predicted directly. Just move the `data` folder to `$root_dir/data`.
+We also uploaded the [processed data](https://www.dropbox.com/sh/5b5thuk62px5qpk/AAAKc7NDUL6JId63tlBH5X9ua?dl=0) for training our model, and the processed data in GM12878 replicate which could be predicted directly. Just move the `data` folder to `$root_dir/data`.
 
 ## Usage
 
