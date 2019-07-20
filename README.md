@@ -8,18 +8,10 @@ We provide the PyTorch implementations for both predicting and training procedur
 
 DeepHiC is a deep learning model developed for boosting the resolution of Hi-C data. It is based on [Generative Adversarial Network](https://arxiv.org/abs/1406.2661). It takes low-resolution data as conditional inputs for *Generator* Net in GAN and outputs the enhanced Hi-C matrices.
 
-We trained DeepHiC for 200 epochs on chromosome 1-14 in the GM12878 cell line from [Rao's HiC](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE63525) and evaluated on remaining data including other two cell lines' data (IMR90, K562).
+We trained DeepHiC for 300 epochs on chromosome 1-14 in the GM12878 cell line from [Rao's HiC](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE63525) and evaluated on remaining data including other two cell lines' data (IMR90, K562).
 
-![Heatmap of](imgs/principle_of_deephic.png)
-> The framework of DeepHiC. With 10kb high-resolution data as the ground truth, DeepHiC predicts enhanced outputs from 40-kb low-resolution Hi-C data (1/16 randomly downsampled reads). The structure similarity index (SSIM) between enhanced outputs and real 10-kb high-resolution data achieves 0.89 on average.
-
-## A Quick Glance of Enhancements
-
-
-A quick glance of the enhancements afforded by DeepHiC.
-
-![Enhancements of DeepHiC](imgs/enhancement_of_deephic.png)
-> Three 1-Mb-width genome regions extracted from test set. Comparing with the real high-resolution data (Experimental), DeepHiC-enhanced data restored all details and textures from low-resolution data (Downsampled)
+![Heatmap of](imgs/diagram_of_deephic.png)
+> The framework of DeepHiC. With 10kb high-resolution data as the ground truth, DeepHiC predicts enhanced outputs from low-resolution Hi-C data (1/10~1/100 randomly downsampled reads). The structure similarity index (SSIM) between enhanced outputs and real 10-kb high-resolution data achieves 0.8 (1% reads) to 0.9 (4% reads) on average.
 
 ## Dependency
 
