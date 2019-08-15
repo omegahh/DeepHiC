@@ -76,6 +76,7 @@ def data_divider_parser():
                           default='10kb', choices=res_map.keys(), required=True)
     req_args.add_argument('-lr', dest='low_res', help='REQUIRED: Low resolution specified[example:40kb]', 
                           default='40kb', required=True)
+    req_args.add_argument('-lrc', dest='lr_cutoff', help='REQUIRED: cutoff for low resolution maps[example:100]', default=100, type=int, required=True)
     req_args.add_argument('-s', dest='dataset', help='REQUIRED: Dataset for train/valid/predict(all)', 
                           default='train', choices=['all', 'train', 'valid'], )
     deephic_args = parser.add_argument_group('DeepHiC Arguments')

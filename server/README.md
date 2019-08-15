@@ -4,7 +4,7 @@ Our webserver [DeepHiC](http://sysomics.com/deephic) could directly enhancing lo
 
 Users could convert their own Hi-C data to a .npz file using python for data preparation. It's very easy in two steps.
 
-> **Note**: Data in following instruction is just for showing how to process your data. They cannot be used because the size of `mat` is too small to divide. We offere a real example data on chromosome 22. [Downloading](http://sysomics.com/deephic/download/?url=chr22_40kb.npz).
+> **Note**: Data in following instruction is just for showing how to process your data. They cannot be used because the size of `mat` is too small to divide. We offere a real example data on chromosome 22.
 
 > **Note**: Our server is based on Alibaba Cloud Elastic Compute Service with 8GB memory and two Intel(R) Xeon(R) CPU E5-2682 v4 @ 2.50GHz cpus. For a intra-interaction data on single chromosome, the calculation may cost 3-5 minutes according to the chromosome size in our server. For very huge data, we recommend you use the python code in this repository.
 

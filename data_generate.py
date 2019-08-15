@@ -7,7 +7,7 @@ import numpy as np
 from utils.io import compactM, divide, pooling
 from all_parser import *
 
-def deephic_divider(n, high_file, down_file, scale=1, pool_type='max', chunk=40, stride=40, bound=201, max_reads=255):
+def deephic_divider(n, high_file, down_file, scale=1, pool_type='max', chunk=40, stride=40, bound=201, lr_cutoff=100, hr_cutoff=255):
     hic_data = np.load(high_file)
     down_data = np.load(down_file)
     compact_idx = hic_data['compact']
@@ -16,11 +16,11 @@ def deephic_divider(n, high_file, down_file, scale=1, pool_type='max', chunk=40,
     hic = compactM(hic_data['hic'], compact_idx)
     down_hic = compactM(down_data['hic'], compact_idx)
     # Clamping
-    hic = np.minimum(max_reads, hic)
-    down_hic = np.minimum(max_reads, down_hic)
+    hic = np.minimum(hr_cutoff, hic)
+    down_hic = np.minimum(lr_cutoff, down_hic)
     # Rescaling
     hic = hic / np.max(hic)
-    down_hic = down_hic / np.max(down_hic)
+    down_hic = down_hic / lr_cutoff
     # Deviding and Pooling (pooling is not performed actually)
     div_dhic, div_inds = divide(down_hic, n, chunk, stride, bound)
     div_dhic = pooling(div_dhic, scale, pool_type=pool_type, verbose=False).numpy()
@@ -33,6 +33,11 @@ if __name__ == '__main__':
     cell_line = args.cell_line
     high_res = args.high_res
     low_res = args.low_res
+    # Note: cutoff for low-sequencing data differ according to the count values' distribution
+    # we recommand a value smaller than the 99.5 percentile
+    # For Rao's Hi-C, we used 100 for 1/16 downsampled data, 80 for 1/25 downsampled data, 
+    # 50 for 1/50 downsampled data and 25 for 1/100 downsampled data.
+    lr_cutoff = args.lr_cutoff
     dataset = args.dataset
 
     chunk = args.chunk
@@ -59,7 +64,7 @@ if __name__ == '__main__':
     for n in chr_list:
         high_file = os.path.join(data_dir, f'chr{n}_{high_res}.npz')
         down_file = os.path.join(data_dir, f'chr{n}_{low_res}.npz')
-        kwargs = {'scale':scale, 'pool_type':pool_type, 'chunk':chunk, 'stride':stride, 'bound':bound}
+        kwargs = {'scale':scale, 'pool_type':pool_type, 'chunk':chunk, 'stride':stride, 'bound':bound, 'lr_cutoff': lr_cutoff}
         res = pool.apply_async(deephic_divider, (n, high_file, down_file,), kwargs)
         results.append(res)
     pool.close()

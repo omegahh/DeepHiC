@@ -11,7 +11,7 @@ DeepHiC is a deep learning model developed for boosting the resolution of Hi-C d
 We trained DeepHiC for 300 epochs on chromosome 1-14 in the GM12878 cell line from [Rao's HiC](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE63525) and evaluated on remaining data including other two cell lines' data (IMR90, K562).
 
 ![Heatmap of](imgs/diagram_of_deephic.png)
-> The framework of DeepHiC. With 10kb high-resolution data as the ground truth, DeepHiC predicts enhanced outputs from low-resolution Hi-C data (1/10~1/100 randomly downsampled reads). The structure similarity index (SSIM) between enhanced outputs and real 10-kb high-resolution data achieves 0.8 (1% reads) to 0.9 (4% reads) on average.
+> The framework of DeepHiC. With 10kb high-resolution data as the ground truth, DeepHiC predicts enhanced outputs from low-resolution Hi-C data (1/10 - 1/100 randomly downsampled reads). The structure similarity index (SSIM) between enhanced outputs and real 10-kb high-resolution data achieves 0.8 (1% reads) to 0.9 (4% reads) on average.
 
 ## Dependency
 
@@ -86,6 +86,6 @@ python train.py
 2. For predicting purpose
 
 ~~~bash
-python data_predict.py -lr 40kb -ckpt save/generator_nonpool_deephic.pytorch -c GM12878
+python data_predict.py -lr 40kb -ckpt save/a_suitable_parameter_file.pytorch -c GM12878
 ~~~
 
