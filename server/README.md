@@ -4,6 +4,10 @@ Our webserver [DeepHiC](http://sysomics.com/deephic) could directly enhancing lo
 
 Users could convert their own Hi-C data to a .npz file using python for data preparation. It's very easy in two steps.
 
+> **Note**: Data in following instruction is just for showing how to process your data. They cannot be used because the size of `mat` is too small to divide. We offere a real example data on chromosome 22. [Downloading](http://sysomics.com/deephic/download/?url=chr22_40kb.npz).
+
+> **Note**: Our server is based on Alibaba Cloud Elastic Compute Service with 8GB memory and two Intel(R) Xeon(R) CPU E5-2682 v4 @ 2.50GHz cpus. For a intra-interaction data on single chromosome, the calculation may cost 3-5 minutes according to the chromosome size in our server. For very huge data, we recommend you use the python code in this repository.
+
 1. Reading your data in python, and asumming that 'mat' is a two-dimensional numpy.ndarray which stores the Hi-C matrix. A one-dimensional array 'compact' is also required. 'compact' is the index of 'mat' where its bins are greater than zero.
 
 > For example, if we have
@@ -32,7 +36,7 @@ Users could convert their own Hi-C data to a .npz file using python for data pre
 numpy.savez_compressed(output_filename, hic=mat, compact=compact)
 ```
 
-We using a compressed .npz data for upload because it is in small size for uploading to our server. The intra-chromosome Hi-C data on human chromosome 1 is about 20Mb in size. And prediction on it will cost ~4.5 minutes in our Alibaba Cloud Elastic Compute Service (CPU: Xeon(R) CPU E5-2682 v4 @ 2.50GHz).
+We using a compressed .npz data for upload because it is in small size for uploading to our server. The intra-chromosome Hi-C data on human chromosome 1 is about 20Mb in size. And prediction on it will cost about 4.5 minutes in our Alibaba Cloud Elastic Compute Service (CPU: Xeon(R) CPU E5-2682 v4 @ 2.50GHz).
 
 
 ### Example data
