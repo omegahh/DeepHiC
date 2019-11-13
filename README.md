@@ -42,7 +42,6 @@ The string variable `root_dir` defined in `all_parser.py` determines the directo
 
 Here we unzip Hi-C data into `/data/RaoHiC/raw/GM12878`. `root_dir` could be customized according to the folder path you store data. But raw data must be putted in `$root_dir/raw/[cell_line_name]`
 
-
 ### 2. Processed data
 
 We also uploaded the [processed data](https://www.dropbox.com/sh/5b5thuk62px5qpk/AAAKc7NDUL6JId63tlBH5X9ua?dl=0) for training our model, and the processed data in GM12878 replicate which could be predicted directly. Just move the `data` folder to `$root_dir/data`.
@@ -61,7 +60,9 @@ python data_aread.py -c GM12878
 
 > Note: We only provide the script for parsing Rao's data. If you are using different types of Hi-C data, please replace them with yours.
 
-> Note: except for Hi-C matrices, we also stored the index of bins whose sum greater than zero for each chromosome, a.k.a variable `compacts` in the same .npz file
+> Note: currently, we also provided a script for convert HiC-Pro output to our input in `./scripts/hicpro2deephic.py`. the chrN_10kb.npz files for one cell line data should be putted in `$root_dir/mat/[cell_line_name]`
+
+> Note: except for Hi-C matrices, we also stored the index of bins whose sum greater than zero for each chromosome, a.k.a variable `compact` in the same .npz file
 
 2. Randomly downsampling to 1/16 reads.
 
@@ -69,11 +70,25 @@ python data_aread.py -c GM12878
 python data_downsample.py -hr 10kb -lr 40kb -r 16 -c GM12878
 ~~~
 
+-  `-hr`: the resolution of high-resolution data
+-  `-lr`: the low-resolution (just for convenience) for downsampled data, e.g. I named 1/16 downsampled data as `chrN_40kb.npz`
+-  `-r` : the downsampling factor
+-  `-c` : cell_line_name of data
+
 3. Generating trainable/predictable data
 
 ~~~bash
 python data_generate.py -hr 10kb -lr 40kb -s all -chunk 40 -stride 40 -bound 201 -scale 1 -c GM12878
 ~~~
+
+-  `-hr`: the high-resolution data we used for train
+-  `-lr`: the low-coverage (downsampled) data we used for training input
+-  `-s` : specifying dataset: train/test/human/mouse
+-  `-chunk`: chunk size for each small samples
+-  `-stride`: should be same with `-chunk`
+-  `-bound`: upper bound of genomic distance, e.g. 201 means 200 x 10kb
+-  `-scale`: whether to pooling input matrices, current version is no, it should be 1 in default.
+-  `-c` : cell_line_name of data
 
 ### 2. Traning or Predicting
 
@@ -89,3 +104,6 @@ python train.py
 python data_predict.py -lr 40kb -ckpt save/a_suitable_parameter_file.pytorch -c GM12878
 ~~~
 
+-  `-lr`: the low-coverage (downsampled) data we used for input
+-  `-ckpt` : trained parameters
+-  `-c` : cell_line_name of data
