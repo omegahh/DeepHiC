@@ -78,7 +78,7 @@ python data_downsample.py -hr 10kb -lr 40kb -r 16 -c GM12878
 3. Generating trainable/predictable data
 
 ~~~bash
-python data_generate.py -hr 10kb -lr 40kb -s all -chunk 40 -stride 40 -bound 201 -scale 1 -c GM12878
+python data_generate.py -hr 10kb -lr 40kb -s train -chunk 40 -stride 40 -bound 201 -scale 1 -c GM12878
 ~~~
 
 -  `-hr`: the high-resolution data we used for train
