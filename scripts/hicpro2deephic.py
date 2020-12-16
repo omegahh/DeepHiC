@@ -9,7 +9,7 @@ import warnings
 import argparse
 import numpy as np
 import pandas as pd
-from scipy.sparse import coo_matrix
+from scipy.sparse import coo_matrix, csr_matrix, triu, tril
 
 def converting_parser():
     parser = argparse.ArgumentParser(description='Converting HiC-Pro output to DeepHiC inputs')
@@ -86,11 +86,12 @@ def read_HiCPro(bedfile, matfile):
         raise ValueError('The HiC matrix is neither lower nor upper triangular!')
     
     # We need to deal with the fact that we should not duplicate entries for the diagonal
-    counts = counts.toarray()
+    counts = csr_matrix(counts)  # CSR format is better for arithmetic
+    # use sparse matrix functions here to save memory
     if triangular_upper:
-        counts = counts + np.triu(counts, 1).T
+        counts = counts + triu(counts, 1).transpose()
     else:
-        counts = counts + np.tril(counts, -1).T
+        counts = counts + tril(counts, -1).transpose()
     return counts, lengths, chrs
 
 
@@ -114,7 +115,8 @@ if __name__ == '__main__':
     assert starts[-1]==counts.shape[0], 'Last end of indices is not match the matrix size'
 
     for i, chrn in enumerate(chrs):
-        intra_counts = counts[starts[i]:starts[i+1], starts[i]:starts[i+1]]
+        # instead of converting whole count matrix to dense array
+        intra_counts = counts[starts[i]:starts[i+1], starts[i]:starts[i+1]].A  # convert sliced sparse matrix to dense array here
         compact = np.where(np.sum(intra_counts, axis=0)>0)[0]
         out_file = os.path.join(out_dir, f'{chrn}_{resolution}.npz')
         np.savez_compressed(out_file, hic=intra_counts, compact=compact)
